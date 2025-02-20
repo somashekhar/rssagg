@@ -34,7 +34,7 @@ func main() {
 
 	conn, err := sql.Open("postgres", dbURL)
 	if err != nil {
-		log.Fatal("Cannot connect to database, %v", err)
+		log.Fatalf("Cannot connect to database: %v", err)
 	}
 
 	apiConfig := apiConfig{
@@ -59,6 +59,7 @@ func main() {
 	v1Router.Get("/healthz", handlerReadiness)
 	v1Router.Get("/err", handlerErr)
 	v1Router.Post("/users", apiConfig.handlerCreateUser)
+	v1Router.Get("/users", apiConfig.handlerGetUser)
 
 	router.Mount("/v1", v1Router)
 
